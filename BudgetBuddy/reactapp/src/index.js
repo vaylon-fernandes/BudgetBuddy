@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ErrorPage from "./components/error-page";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
+import DashboardPage from "./components/DashboardPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "register",
     element: <RegisterPage />,
+  },
+  {
+    path: "dashboard",
+    element: <DashboardPage />,
   },
 ]);
 

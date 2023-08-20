@@ -7,7 +7,7 @@ export default function ErrorPage() {
   return (
     <>
       <Link to="/" className="px-4 text-decoration-none">
-        {"<<  Back"}
+        {"<<  Back to home"}
       </Link>
       <div id="error-page">
         <div className="container col-xxl-8 px-4 py-5">
