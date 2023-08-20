@@ -11,6 +11,7 @@ const RegisterPage = (props) => {
         <div className="row flex-lg-row align-items-center g-5 py-5">
           <div className="col-lg-6">
             <h1 className="display-5 fw-bold lh-1 mb-3">Register Page</h1>
+            Hello
           </div>
         </div>
       </div>

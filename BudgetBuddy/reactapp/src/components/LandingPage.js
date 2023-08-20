@@ -18,7 +18,7 @@ const LandingPage = (props) => {
         </div>
         <div className="col-lg-6">
           <h1 className="display-5 fw-bold lh-1 mb-3">Budget Buddy</h1>
-          <p className="lead">Hello.</p>
+          <p className="lead">Hello.</p> {/* TODO - Write landing page description here. */}
           <div className="d-grid gap-2 d-md-flex justify-content-md-start">
             <Link to="/login" className="btn btn-primary btn-lg px-4">
               Sign in

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../services/AuthContext";
 
 const LoginPage = (props) => {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [captchaResponse, setCaptchaResponse] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -19,12 +23,12 @@ const LoginPage = (props) => {
       //   return;
       // }
 
-      // TODO - Replace with actual login logic.
-      if (
-        (email === "vaibhav@budgetbuddy.com" && password === "Jogad") ||
-        (email === "vaylon@budgetbuddy.com" && password === "test")
-      ) {
-        window.location.href = `/dashboard?email=${email}`;
+      // TODO - Replace with actual login logic (Post method).
+      const loggedInUser = await login({ email, password });
+
+      if (loggedInUser) {
+        setErrorMessage(null);
+        navigate("/dashboard");
       } else {
         setErrorMessage("Invalid email or password");
       }
@@ -77,8 +81,8 @@ const LoginPage = (props) => {
                 />
               </div>
               <div className="form-group">
-                Captcha here
-                <div
+                Captcha here {/* TODO - Captcha implementation. */}
+                {/* <div
                   className="g-recaptcha"
                   data-sitekey="6LfKURIUAAAAAO50vlwWZkyK_G2ywqE52NU7YO0S"
                   data-callback={verifyRecaptchaCallback}
@@ -90,7 +94,7 @@ const LoginPage = (props) => {
                   required
                   data-error="Please complete the Captcha"
                 />
-                <div className="help-block with-errors"></div>
+                <div className="help-block with-errors"></div> */}
               </div>
               <button
                 type="button"
