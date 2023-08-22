@@ -69,9 +69,6 @@ C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\weba
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\Mono.TextTemplating.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\MySql.Data.dll
-C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\Ubiety.Dns.Core.dll
-C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\Zstandard.Net.dll
-C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\MySql.Data.EntityFrameworkCore.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\NuGet.Common.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\NuGet.Configuration.dll
@@ -82,8 +79,6 @@ C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\weba
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\NuGet.ProjectModel.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\NuGet.Protocol.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\NuGet.Versioning.dll
-C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\Renci.SshNet.dll
-C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\SshNet.Security.Cryptography.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\System.CodeDom.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\System.Composition.AttributedModel.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\System.Composition.Convention.dll
@@ -96,7 +91,6 @@ C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\weba
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\System.Security.Permissions.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\System.Windows.Extensions.dll
-C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\System.Xml.XPath.XmlDocument.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\af\Humanizer.resources.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\ar\Humanizer.resources.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\az\Humanizer.resources.dll
@@ -241,3 +235,10 @@ C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\weba
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\MySql.EntityFrameworkCore.dll
+C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\ZstdSharp.dll
+C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\runtimes\win-x64\native\comerr64.dll
+C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\runtimes\win-x64\native\gssapi64.dll
+C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\runtimes\win-x64\native\krb5_64.dll
+C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\bin\Debug\net7.0\runtimes\win-x64\native\krbcc64.dll

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Reflection.Metadata;
 using webapi.Models;
 
 namespace webapi.Data
@@ -26,6 +27,18 @@ namespace webapi.Data
             {
                 Console.WriteLine(ex.Message);
             }
+    }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Users>()
+                .HasIndex(b => b.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<Users>()
+            .Property(u => u.UserRole)
+            .HasConversion<string>()
+            .HasMaxLength(50);
         }
     }
-}
+    }
+

@@ -13,6 +13,7 @@ namespace webapi.Models
         [Required]
         public string UserName { get; set; } = string.Empty;
         [Column("email")]
+        
         [Required]
         public string Email { get; set; } = string.Empty;
         [Column("password")]

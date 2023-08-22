@@ -10,7 +10,13 @@ namespace webapi.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApiDbContext _dbContext;
-        
+       // private readonly ILogger<UserController> _logger;
+
+        /*public UserController(ILogger<UserController> logger)
+        {
+            _logger = logger;
+        }
+        */
         public UserController(ApiDbContext dbContext)
         {
             _dbContext = dbContext; 
@@ -29,9 +35,17 @@ namespace webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<Users>> RegisterUser(Users user)
         {
-            await _dbContext.User.AddAsync(user);
-            await _dbContext.SaveChangesAsync();
-            return Ok();    
+            try
+            {
+                await _dbContext.User.AddAsync(user);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return Conflict("Duplicate Record Exists");
+            }
+            
+            return Created("Successfully Registered", user);    
         }
         [HttpPut]
         public async Task<ActionResult<Users>> UpdateUser(Users user)
@@ -47,7 +61,7 @@ namespace webapi.Controllers
             var user = await _dbContext.User.FindAsync(userId);
             _dbContext.User.Remove(user);
             await _dbContext.SaveChangesAsync();
-            return Ok();
+            return NoContent();
         }
 
     }
