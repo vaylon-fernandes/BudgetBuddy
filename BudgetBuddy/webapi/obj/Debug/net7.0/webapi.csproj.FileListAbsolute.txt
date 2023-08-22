@@ -31,3 +31,36 @@ C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\weba
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.pdb
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.genruntimeconfig.cache
 C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\webapi\obj\Debug\net7.0\ref\webapi.dll
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\appsettings.Development.json
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\appsettings.json
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\webapi.exe
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\webapi.deps.json
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\webapi.runtimeconfig.json
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\webapi.dll
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\webapi.pdb
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\Microsoft.OpenApi.dll
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\VaibhavProject\BudgetBuddy\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.csproj.AssemblyReference.cache
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.GeneratedMSBuildEditorConfig.editorconfig
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.AssemblyInfoInputs.cache
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.AssemblyInfo.cs
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.csproj.CoreCompileInputs.cache
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.MvcApplicationPartsAssemblyInfo.cs
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.MvcApplicationPartsAssemblyInfo.cache
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\staticwebassets\msbuild.webapi.Microsoft.AspNetCore.StaticWebAssets.props
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\staticwebassets\msbuild.build.webapi.props
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.webapi.props
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.webapi.props
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\staticwebassets.pack.json
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\staticwebassets.build.json
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\staticwebassets.development.json
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\scopedcss\bundle\webapi.styles.css
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.csproj.CopyComplete
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.dll
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\refint\webapi.dll
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.pdb
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\webapi.genruntimeconfig.cache
+D:\VaibhavProject\BudgetBuddy\webapi\obj\Debug\net7.0\ref\webapi.dll
