@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Reflection.Metadata;
-using webapi.Models;
+using webapi.Entities;
 
 namespace webapi.Data
 {

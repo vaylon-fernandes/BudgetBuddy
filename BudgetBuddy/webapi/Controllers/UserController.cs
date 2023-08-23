@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using webapi.Data;
-using webapi.Models;
+using webapi.Entities;
+using webapi.Services;
+using WebApi.Models;
+
 
 namespace webapi.Controllers
 {
@@ -10,27 +13,48 @@ namespace webapi.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApiDbContext _dbContext;
-       // private readonly ILogger<UserController> _logger;
+        private IUserService _userService;
+
+        // private readonly ILogger<UserController> _logger;
 
         /*public UserController(ILogger<UserController> logger)
         {
             _logger = logger;
         }
         */
-        public UserController(ApiDbContext dbContext)
+        public UserController(ApiDbContext dbContext, IUserService userService)
         {
-            _dbContext = dbContext; 
+            _dbContext = dbContext;
+            _userService = userService;
         }
 
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate(AuthenticateRequest model)
+        {
+            var response = _userService.Authenticate(model);
+
+            if (response == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(response);
+        }
+        [Authorize]
         [HttpGet]
+        public IActionResult GetAll()
+        {
+            var users =  _userService.GetAll();
+            return Ok(users);
+        }
+
+        /*[HttpGet]
         public ActionResult<IEnumerable<Users>> GetAllUsers()
         {
             return _dbContext.User;
-        }
+        }*/
         [HttpGet("{userId:int}")]
         public async Task<ActionResult<Users>> GetUserById(int userId) {
             var user = await _dbContext.User.FindAsync(userId);
-            return user;
+            return Ok(user);
         }
         [HttpPost]
         public async Task<ActionResult<Users>> RegisterUser(Users user)
