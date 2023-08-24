@@ -12,19 +12,19 @@ namespace webapi.Entities
         [Key]
         [Column("user_id")]
         public int UserId { get; set; }
-        [Column("user_name")]
+        [Column("user_name",TypeName = "varchar(250)")]
         [Required]
         public string UserName { get; set; } = string.Empty;
-        [Column("email")]
-
+        [Column("email",TypeName= "varchar(100)")]
         [Required]
         public string Email { get; set; } = string.Empty;
         [JsonIgnore]
-        [Column("password")]
+        [Column("password",TypeName ="varchar(255)")]
         public string Password { get; set; } = string.Empty;
         [EnumDataType(typeof(Role))]
-        [Column("role")]
+        [Column("role",TypeName="varchar(10)")]
         public Role UserRole{ get; set; }
-        public string Token { get; set; }
+        [Column("salt", TypeName = "varchar(50)")]
+        public string Salt { get; set; } = string.Empty;
     }
 }

@@ -36,6 +36,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "JWTAuthentication v1"));
 }
+else
+{
+    app.UseHsts();
+}
 
 // global cors policy
 app.UseCors(x => x

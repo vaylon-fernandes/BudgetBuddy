@@ -25,7 +25,7 @@ public class UserService : IUserService
 
     public AuthenticateResponse Authenticate(AuthenticateRequest model)
     {
-        var user = _dbContext.User.FirstOrDefault(x => x.UserName == model.Username && x.Password == model.Password);
+        var user = _dbContext.User.FirstOrDefault(x => x.UserName == model.Email && x.Password == model.Password);
 
         //var user = _users.SingleOrDefault(x => x.UserName == model.Username && x.Password == model.Password);
 
