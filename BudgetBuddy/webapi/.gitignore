@@ -1303,3 +1303,4 @@ FodyWeavers.xsd
 
 .vs/
 *.suo
+obj/

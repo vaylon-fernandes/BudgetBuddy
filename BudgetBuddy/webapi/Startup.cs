@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using webapi.Services;
+//using webapi.Services;
 using WebApi.Helpers;
-using WebApi.Services;
+
 
 namespace JWTAuthentication
 {
@@ -57,7 +57,7 @@ namespace JWTAuthentication
             });
 
             // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
+            //services.AddScoped<IUserService, UserService>();
 
             services.AddSwaggerGen(c =>
             {

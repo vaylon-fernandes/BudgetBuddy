@@ -1,4 +1,4 @@
-﻿using webapi.Entities;
+﻿/*using webapi.Entities;
 using WebApi.Models;
 
 namespace webapi.Services
@@ -11,3 +11,4 @@ namespace webapi.Services
     }
 
 }
+*/
