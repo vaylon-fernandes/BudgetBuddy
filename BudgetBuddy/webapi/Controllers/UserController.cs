@@ -40,12 +40,29 @@ namespace webapi.Controllers
         [Authorize]
         [HttpGet("{userId:int}")]
         public async Task<ActionResult<Users>> GetUserById(int userId) {
-            var user = await _dbContext.User.FindAsync(userId);
+            //var user = await _dbContext.User.FindAsync(userId);
+            var user = await _dbContext.User.FirstOrDefaultAsync(u => u.UserId == userId);
+
             if (user == null)
             {
                 return NotFound("user not found");
             }
             return Ok(user);
+        }
+
+        // GET: api/Users/5/Expenses
+        [Authorize]
+        [HttpGet("{id}/Expenses")]
+        public async Task<ActionResult<IEnumerable<Expenses>>> GetUserExpenses(int id)
+        {
+             List<Expenses> expenses = await _dbContext.Expenses.Where(e => e.UserId == id).ToListAsync();
+
+            if (expenses == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(expenses);
         }
 
         [Authorize]
@@ -60,7 +77,7 @@ namespace webapi.Controllers
             return Ok();
         }
 
-
+        
         [Authorize]
         [HttpDelete("{userId:int}")]
         public async Task<ActionResult<Users>> DeleteUser(int userId)
