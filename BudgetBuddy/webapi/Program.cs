@@ -20,7 +20,7 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 // configure DI for application services
 //builder.Services.AddScoped<IUserService, UserService>();
 
-string conString = @"server=localhost;port=3306;user=root; password=root123;database=testDb";
+string conString = @"server=localhost;port=3306;user=root; password=root123;database=testDb2";
 builder.Services.AddDbContext<ApiDbContext>(options => options.UseMySQL(conString));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
