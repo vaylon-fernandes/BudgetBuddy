@@ -25,10 +25,10 @@ namespace webapi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Users>>> GetUser()
         {
-          if (_context.User == null)
-          {
-              return NotFound();
-          }
+            if (_context.User == null)
+            {
+                return NotFound();
+            }
             return await _context.User.ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace webapi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Users>> GetUsers(int id)
         {
-          if (_context.User == null)
-          {
-              return NotFound();
-          }
+            if (_context.User == null)
+            {
+                return NotFound();
+            }
             var users = await _context.User.FindAsync(id);
 
             if (users == null)
@@ -86,10 +86,10 @@ namespace webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<Users>> PostUsers(Users users)
         {
-          if (_context.User == null)
-          {
-              return Problem("Entity set 'ApiDbContext.User'  is null.");
-          }
+            if (_context.User == null)
+            {
+                return Problem("Entity set 'ApiDbContext.User'  is null.");
+            }
             _context.User.Add(users);
             await _context.SaveChangesAsync();
 
@@ -115,7 +115,7 @@ namespace webapi.Controllers
 
             return NoContent();
         }
-                private bool UsersExists(int id)
+        private bool UsersExists(int id)
         {
             return (_context.User?.Any(e => e.UserId == id)).GetValueOrDefault();
         }

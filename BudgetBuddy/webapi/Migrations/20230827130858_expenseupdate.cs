@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
@@ -6,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace webapi.Migrations
 {
     /// <inheritdoc />
-    public partial class testMigrate : Migration
+    public partial class expenseupdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,15 +40,17 @@ namespace webapi.Migrations
                     expense_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     description = table.Column<string>(type: "varchar(250)", nullable: false),
+                    expense_category = table.Column<string>(type: "varchar(25)", nullable: false),
                     amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    date_entered = table.Column<DateTime>(type: "datetime", nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_expenses", x => x.expense_id);
                     table.ForeignKey(
-                        name: "FK_expenses_users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_expenses_users_user_id",
+                        column: x => x.user_id,
                         principalTable: "users",
                         principalColumn: "user_id",
                         onDelete: ReferentialAction.Cascade);
@@ -55,9 +58,9 @@ namespace webapi.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_expenses_UserId",
+                name: "IX_expenses_user_id",
                 table: "expenses",
-                column: "UserId");
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_users_email",

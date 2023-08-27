@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webapi.Data;
+using webapi.DTO;
 using webapi.Entities;
 
 namespace webapi.Controllers
@@ -15,13 +17,15 @@ namespace webapi.Controllers
     public class ExpensesController : ControllerBase
     {
         private readonly ApiDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ExpensesController(ApiDbContext context)
+        public ExpensesController(ApiDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: api/Expenses
+        /*// GET: api/Expenses
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Expenses>>> GetUserExpenses(int id)
         {
@@ -32,7 +36,7 @@ namespace webapi.Controllers
             var userExpenses =  _context.Expenses.Where(user=>user.UserId==id).ToList();
             if(userExpenses==null || userExpenses.Count==0) { return NotFound(); }
             return Ok(userExpenses);
-        }
+        }*/
 
         // GET: api/Expenses/5
         [HttpGet("{id}")]
@@ -49,45 +53,18 @@ namespace webapi.Controllers
                 return NotFound();
             }
 
-            return expenses;
+            var requiredInfo = _mapper.Map<Expenses>(expenses);
+            return requiredInfo;
         }
 
-        // PUT: api/Expenses/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutExpenses(int id, Expenses expenses)
-        {
-            if (id != expenses.ExpenseId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(expenses).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ExpensesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+        
 
         // POST: api/Expenses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Expenses>> PostExpenses(Expenses expenses)
+        public async Task<ActionResult<Expenses>> PostExpenses(ExpenseDTO payload)
         {
+            var expenses = _mapper.Map<Expenses>(payload);
           if (_context.Expenses == null)
           {
               return Problem("Entity set 'ApiDbContext.Expenses'  is null.");
@@ -117,6 +94,7 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+
 
         private bool ExpensesExists(int id)
         {

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using System.Text.Json.Serialization;
 using webapi.Data;
 using webapi.Helpers;
@@ -11,17 +13,27 @@ using WebApi.Helpers;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
 // Add services to the container.
 builder.Services.AddCors();
 builder.Services.AddControllers();
-builder.Services.AddControllers().AddJsonOptions(options =>
+/*builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
     options.JsonSerializerOptions.DefaultIgnoreCondition =
         JsonIgnoreCondition.WhenWritingNull;
-});
+});*/
+
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+
+);
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.Converters.Add(new StringEnumConverter())
+
+);
+builder.Services.AddAutoMapper(typeof(Program));
+
 // configure strongly typed settings object
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 

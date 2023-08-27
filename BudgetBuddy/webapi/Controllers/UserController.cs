@@ -11,6 +11,8 @@ using webapi.Entities;
 using WebApi.Models;
 using webapi.Utils;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using webapi.DTO;
 
 namespace webapi.Controllers
 {
@@ -21,11 +23,13 @@ namespace webapi.Controllers
         private readonly ApiDbContext _dbContext;
        // private IUserService _userService;
         private IConfiguration _configuration;
+        private IMapper _mapper;
 
-        public UserController(ApiDbContext dbContext, IConfiguration configuration)
+        public UserController(ApiDbContext dbContext, IConfiguration configuration, IMapper mapper)
         {
             _dbContext = dbContext;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -33,7 +37,9 @@ namespace webapi.Controllers
         public async Task<ActionResult<IEnumerable<Users>>> GetAll()
         {
             var users = _dbContext.User;
-            return Ok(users);   
+           var requieredInfo = _mapper.Map<List<UserDTO>>(users);
+
+            return Ok(requieredInfo);   
         }
 
 
@@ -50,34 +56,37 @@ namespace webapi.Controllers
             return Ok(user);
         }
 
-        // GET: api/Users/5/Expenses
         [Authorize]
-        [HttpGet("{id}/Expenses")]
-        public async Task<ActionResult<IEnumerable<Expenses>>> GetUserExpenses(int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutUsers(int id, Users users)
         {
-             List<Expenses> expenses = await _dbContext.Expenses.Where(e => e.UserId == id).ToListAsync();
-
-            if (expenses == null)
+            if (id != users.UserId)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            return Ok(expenses);
-        }
+            _dbContext.Entry(users).State = EntityState.Modified;
 
-        [Authorize]
-        [HttpPut]
-        public async Task<ActionResult<Users>> UpdateUser(Users user)
-        {
-            using (var dbContext = new ApiDbContext())
+            try
             {
-                dbContext.Entry(user).State = EntityState.Modified;
-                await dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
             }
-            return Ok();
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UsersExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        
+        // TODO: Include all entities -- Cascade
         [Authorize]
         [HttpDelete("{userId:int}")]
         public async Task<ActionResult<Users>> DeleteUser(int userId)
@@ -99,5 +108,48 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        // User expense methods
+        [HttpGet("AllExpenses")]
+        public async Task<IActionResult> GetUserWithExpenses()
+        {
+            var users = await _dbContext.User
+            .Include(_ => _.Expenses).ToListAsync();
+            var requieredInfo = _mapper.Map<List<UserExpenseDTO>>(users);
+
+            return Ok(requieredInfo);
+        }
+
+        // GET: api/Users/5/Expenses
+        [Authorize]
+        [HttpGet("{id}/GetExpenses")]
+        public async Task<ActionResult<IEnumerable<Expenses>>> GetUserWithExpensesById(int id)
+        {
+            //List<Expenses> expenses = await _dbContext.Expenses.Where(e => e.UserId == id).ToListAsync();
+
+            var expensesById = await _dbContext.User
+            .Include(_ => _.Expenses).Where(_ => _.UserId == id).ToListAsync();
+
+
+            if (expensesById == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(expensesById);
+        }
+
+        
+        // helper methods
+        private bool UsersExists(int id)
+        {
+            return (_dbContext.User?.Any(e => e.UserId == id)).GetValueOrDefault();
+        }
+
+        private bool ExpensesExists(int id)
+        {
+            return (_dbContext.Expenses?.Any(e => e.ExpenseId == id)).GetValueOrDefault();
+        }
+
     }
+
 }

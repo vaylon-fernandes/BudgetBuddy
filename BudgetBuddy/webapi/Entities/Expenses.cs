@@ -19,9 +19,12 @@ namespace webapi.Entities
 
         [Column("amount")]
         public decimal Amount { get; set; }
-
+        [Column("date_entered", TypeName = "datetime")]
+        public DateTime EnteredDate { get; set; } = DateTime.Now;
+        [Column("user_id")]
         [ForeignKey("user_id")]
         public int UserId { get; set; }
+        
        // [JsonIgnore]
         public Users User { get; set; }
     }
