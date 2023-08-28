@@ -62,7 +62,7 @@ namespace webapi.Controllers
         // POST: api/Expenses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Expenses>> PostExpenses(ExpenseDTO payload)
+        public async Task<IActionResult> PostExpenses(ExpenseDTO payload)
         {
             var expenses = _mapper.Map<Expenses>(payload);
           if (_context.Expenses == null)

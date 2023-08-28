@@ -19,6 +19,29 @@ namespace webapi.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("webapi.Entities.Budget", b =>
+                {
+                    b.Property<int>("BudgetId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("budget_id");
+
+                    b.Property<decimal>("LimitAmount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("limit_amount");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("BudgetId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("budget");
+                });
+
             modelBuilder.Entity("webapi.Entities.Expenses", b =>
                 {
                     b.Property<int>("ExpenseId")
@@ -96,6 +119,15 @@ namespace webapi.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("webapi.Entities.Budget", b =>
+                {
+                    b.HasOne("webapi.Entities.Users", null)
+                        .WithOne("Budget")
+                        .HasForeignKey("webapi.Entities.Budget", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("webapi.Entities.Expenses", b =>
                 {
                     b.HasOne("webapi.Entities.Users", "User")
@@ -109,6 +141,8 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("webapi.Entities.Users", b =>
                 {
+                    b.Navigation("Budget");
+
                     b.Navigation("Expenses");
                 });
 #pragma warning restore 612, 618
