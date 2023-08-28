@@ -1,0 +1,93 @@
+Budget BuddyS SRS (Group no : 72)
+Project name: Budget Buddy (online web application for managing personal finances) 
+Project members: 
+Vaylon Fernandes
+Vaibhav Jogad
+
+Software Requirements Specification (SRS) for Budget Buddy
+
+1. Objective:
+The purpose of the Budget Buddy web app is to provide users with a user-friendly platform to create budgets, monitor spending, set financial goals, and achieve better control over their personal finances.
+
+2. Scope:
+Budget Buddy will allow users to:
+Record and categorize income and expenses.
+Define budget limits for various expense categories.
+Set and track financial goals.
+Generate reports and charts for financial analysis.
+Receive alerts and reminders for bills and budget limits.
+Include family members and track their income and expenses.
+Report an error to the admin and expect a solution for the same.
+
+4. Functional Requirements:
+
+4.1 User Registration and Authentication:
+Users can register with the system using their email or social media accounts.
+The system will provide secure authentication to ensure user data privacy.
+
+4.2 Role-based authorisation:
+Based on the role users can access different sets of functionality.
+
+4.3 User Profile:
+Users can create and manage their profiles.
+Each user can customize their profile settings and preferences.
+
+4.4 Income Management:
+Users can add various sources of income (salary, freelance work, investments).
+Users can input income details including source, amount, and frequency.
+The system will provide options to categorize income.
+
+4.5 Expense Management:
+Users can record expenses with details like amount, date, and category.
+The system will support categorizing expenses into predefined or user-defined categories.
+Users can add recurring expenses and specify recurrence frequency.
+
+4.6 Budget Creation and Management:
+Users can create budgets by setting limits for different expense categories.
+The system will alert users when expenses approach 70% or exceed budget limits.
+Users can modify budget limits as needed.
+
+4.7 Financial Goals:
+Users can set financial goals, including target amounts and target dates.
+The system will track progress toward goals and provide notifications upon goal achievement.
+
+4.8 Reports and Analysis:
+The system will generate reports and graphs illustrating spending trends, budget adherence, and goal progress.
+Users can filter and customize reports based on time periods and categories.
+
+4.9 Alerts and Reminders:
+Users will receive notifications for approaching bill due dates and exceeding budget limits.
+4.10 Admin 
+Admin will be able to manage user accounts and provide resolution to reported errors.
+
+5. Non-Functional Requirements:
+
+5.1 User Interface:
+The user interface will be intuitive, user-friendly, and responsive.
+The system will provide both web and mobile app interfaces.
+
+5.2 Performance:
+The system should provide quick responses and minimal downtime.
+It should handle a reasonable number of users and transactions simultaneously.
+
+5.3 Scalability:
+The system should be designed to handle potential growth in users and data.
+
+5.4 Data Backup and Recovery:
+The system will regularly back up user data to prevent data loss.
+A recovery mechanism will be in place to restore data if needed.
+
+5.5 Compatibility:
+The system should work on various web browsers and mobile devices.
+
+5.6 Session tracking:
+The system should remember the state of a user throughout the session.
+
+5.7 Two-Factor Authentication (2FA) 
+The system shall implement a two-factor authentication (2FA) mechanism to enhance security during user authentication. Users will be required to provide a second authentication factor in addition to their password, which will be a verification code sent to their registered email 
+
+6. Future Enhancements:
+Integration with financial institutions for automatic transaction imports.
+Enhanced investment analysis and portfolio management features.
+Collaborative budgeting and sharing features for families or groups.
+
