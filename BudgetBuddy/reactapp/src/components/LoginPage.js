@@ -12,7 +12,7 @@ const LoginPage = (props) => {
 
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     try {
       // TODO - Uncomment when captcha API is working.
       // const captchaResult = await axios.post("/api/captcha-verify", {
@@ -24,13 +24,14 @@ const LoginPage = (props) => {
       // }
 
       // TODO - Replace with actual login logic (Post method).
-      const loggedInUser = login({ email, password });
-
-      if (loggedInUser) {
+      const loggedInUser = await login({ email, password });
+      
+      if (loggedInUser.success===true) {
         setErrorMessage(null);
         navigate("/dashboard");
       } else {
-        setErrorMessage("Invalid email or password");
+
+        setErrorMessage(loggedInUser.messageList[0]);
       }
     } catch (error) {
       console.error(error);

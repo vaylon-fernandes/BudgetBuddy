@@ -1,22 +1,40 @@
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
-import * as formik from 'formik';
-import * as yup from 'yup';
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
-function FormExample() {
-  const { Formik } = formik;
+const SignUpForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const nav=useNavigate();
 
-  const schema = yup.object().shape({
-    
-    username: yup.string().required(),
-    email: yup.string().required(),
-    password: yup.string().required(),
-    terms: yup.bool().required().oneOf([true], 'terms must be accepted'),
-  });
+  const handleSignUp = async (userData) => {
+    userData.preventDefault();
+    // TODO: Handle signup logic here
+    try{
+      const response = await axios.post(
+        "http://localhost:5096/api/User/register",
+        {
+          email:email,
+          password:password
+        }
+      );
+
+      const signURresponse = response.data;
+      if (signURresponse.success===true) {
+        setErrorMessage("");
+        nav("/login")
+      }else{
+        setErrorMessage(signURresponse.messageList[0]);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMessage("An error occurred");
+      throw error;
+    }
+
+  };
 
   return (
     <>
@@ -24,104 +42,63 @@ function FormExample() {
         {"<<  Back to home"}
       </Link>
 
-    <Formik
-      validationSchema={schema}
-      onSubmit={console.log}
-      initialValues={{
-        
-        username: '',
-        email: '',
-        password: '',
-        terms: false,
-      }}
-    >
-      {({ handleSubmit, handleChange, values, touched, errors }) => (
-        <Form noValidate onSubmit={handleSubmit}>
-          
-          <Row className="mb-3">
-            
-            
-            <Form.Group as={Col} md="4" controlId="validationFormikUsername2">
-              <Form.Label>Username</Form.Label>
-              <InputGroup hasValidation>
-                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="Username"
-                  aria-describedby="inputGroupPrepend"
-                  name="username"
-                  value={values.username}
-                  onChange={handleChange}
-                  isInvalid={!!errors.username}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.username}
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group
-              as={Col}
-              md="6"
-              controlId="validationFormik103"
-              className="position-relative"
-            >
-              <Form.Label>Email</Form.Label>
-              <Form.Control
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <h2 className="mb-4">Sign Up</h2>
+          <form onSubmit={handleSignUp}>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Email address
+              </label>
+              <input
                 type="email"
-                placeholder="Email"
-                name="email"
-                value={values.email}
-                onChange={handleChange}
-                isInvalid={!!errors.email}
+                className="form-control"
+                id="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
-
-              <Form.Control.Feedback type="invalid" tooltip>
-                {errors.email}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group
-              as={Col}
-              md="3"
-              controlId="validationFormik104"
-              className="position-relative"
-            >
-              <Form.Label>Password</Form.Label>
-              <Form.Control
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
                 type="password"
-                placeholder="Password"
-                name="password"
-                value={values.password}
-                onChange={handleChange}
-                isInvalid={!!errors.password}
+                className="form-control"
+                id="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
-              <Form.Control.Feedback type="invalid" tooltip>
-                {errors.password}
-              </Form.Control.Feedback>
-            </Form.Group>
-            
-          </Row>
-          
-          <Form.Group className="position-relative mb-3">
-            <Form.Check
-              required
-              name="terms"
-              label="Agree to terms and conditions"
-              onChange={handleChange}
-              isInvalid={!!errors.terms}
-              feedback={errors.terms}
-              feedbackType="invalid"
-              id="validationFormik106"
-              feedbackTooltip
-            />
-          </Form.Group>
-          <Button type="submit">Submit form</Button>
-        </Form>
-      )}
-    </Formik>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="form-label">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="confirmPassword"
+                placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Sign Up
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div className="text-danger">{errorMessage}</div>
     </>
   );
-}
+};
 
-export default FormExample;
+export default SignUpForm;
