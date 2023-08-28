@@ -53,21 +53,26 @@ namespace webapi.Controllers
                             expires: expireDate,
                             signingCredentials: creds);
                         responseLogin.Success = true;
+                        responseLogin.Email = requestLogin.Email;
                         responseLogin.Token = new JwtSecurityTokenHandler().WriteToken(token);
                         responseLogin.ExpireDate = timeStamp;
+
                     }
                     else
                     {
+                        responseLogin.Success = false;
                         responseLogin.MessageList.Add("Password is wrong");
                     }
                 }
                 else
                 {
+                    responseLogin.Success = false;
                     responseLogin.MessageList.Add("Email is wrong");
                 }
             }
             return responseLogin;
         }
+
         [AllowAnonymous]
         [HttpPost]
         [Route("register")]
