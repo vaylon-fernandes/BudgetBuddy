@@ -12,6 +12,8 @@ namespace webapi.Helpers
             CreateMap<Expenses, ExpenseDTO>();
             CreateMap<ExpenseDTO, Expenses>();
             CreateMap<Budget, BudgetDTO>();
+            CreateMap<Savings, SavingsDTO>();
+            CreateMap<SavingsDTO, Savings>();
 
         }
     }

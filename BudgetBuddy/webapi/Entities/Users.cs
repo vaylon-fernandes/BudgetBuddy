@@ -29,6 +29,8 @@ namespace webapi.Entities
         public List<Expenses>? Expenses { get; set; }
         public Budget? Budget { get; set; }
         public List<FinancialGoal>? FinancialGoals { get; set; }
+        public Savings Savings { get; set; } // One-to-one relation navigation property
+
 
     }
 }

@@ -12,7 +12,7 @@ namespace webapi.Data
         public DbSet<Expenses> Expenses { get; set; }
         public DbSet<webapi.Entities.Budget> Budget { get; set; } = default!;
         public DbSet<FinancialGoal> FinancialGoals { get; set; }
-
+        public DbSet<Savings> Savings { get; set; }
         public ApiDbContext() { }
         public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) {
             

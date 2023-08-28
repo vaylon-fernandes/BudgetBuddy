@@ -262,6 +262,79 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        // Savings methods
+
+        // GET: api/Users/5/Savings
+        [Authorize]
+        [HttpGet("{userId:int}/GetSavings")]
+        public async Task<ActionResult<SavingsDTO>> GetUserSavings(int userId)
+        {
+            var savings = await _dbContext.Savings
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (savings == null)
+            {
+                return NotFound("Savings not found for the user.");
+            }
+
+            var savingsDTO = _mapper.Map<SavingsDTO>(savings);
+            return Ok(savingsDTO);
+        }
+
+        // POST: api/Users/5/AddSavings
+        [Authorize]
+        [HttpPost("{userId:int}/AddSavings")]
+        public async Task<ActionResult<SavingsDTO>> AddSavingsForUser(int userId, SavingsDTO savingsDTO)
+        {
+            var savings = _mapper.Map<Savings>(savingsDTO);
+            savings.UserId = userId; // Set the UserId explicitly
+
+            _dbContext.Savings.Add(savings);
+            await _dbContext.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetUserSavings), new { userId }, savingsDTO);
+        }
+
+        // PUT: api/Users/5/UpdateSavings
+        [Authorize]
+        [HttpPut("{userId:int}/UpdateSavings")]
+        public async Task<IActionResult> UpdateSavingsForUser(int userId, SavingsDTO savingsDTO)
+        {
+            var existingSavings = await _dbContext.Savings
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (existingSavings == null)
+            {
+                return NotFound("Savings not found for the user.");
+            }
+
+            var updatedSavings = _mapper.Map(savingsDTO, existingSavings);
+
+            _dbContext.Entry(updatedSavings).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // DELETE: api/Users/5/DeleteSavings
+        [Authorize]
+        [HttpDelete("{userId:int}/DeleteSavings")]
+        public async Task<ActionResult<SavingsDTO>> DeleteSavingsForUser(int userId)
+        {
+            var savings = await _dbContext.Savings
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (savings == null)
+            {
+                return NotFound("Savings not found for the user.");
+            }
+
+            _dbContext.Savings.Remove(savings);
+            await _dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         // helper methods
         private bool UsersExists(int id)
         {
