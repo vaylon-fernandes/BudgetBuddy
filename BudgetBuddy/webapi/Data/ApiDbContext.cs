@@ -11,6 +11,7 @@ namespace webapi.Data
         public DbSet<Users> User { get; set; }
         public DbSet<Expenses> Expenses { get; set; }
         public DbSet<webapi.Entities.Budget> Budget { get; set; } = default!;
+        public DbSet<FinancialGoal> FinancialGoals { get; set; }
 
         public ApiDbContext() { }
         public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) {

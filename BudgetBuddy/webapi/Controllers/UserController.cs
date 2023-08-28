@@ -13,6 +13,7 @@ using webapi.Utils;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using webapi.DTO;
+using Humanizer;
 
 namespace webapi.Controllers
 {
@@ -86,7 +87,7 @@ namespace webapi.Controllers
             return NoContent();
         }
 
-        // TODO: Include all entities -- Cascade
+        
         [Authorize]
         [HttpDelete("{userId:int}")]
         public async Task<ActionResult<Users>> DeleteUser(int userId)
@@ -187,6 +188,80 @@ namespace webapi.Controllers
             return Ok();
         }
 
+        // GET: api/Users/5/FinancialGoals
+        [Authorize]
+        [HttpGet("{userId:int}/GetFinancialGoals")]
+        public async Task<ActionResult<IEnumerable<FinancialGoal>>> GetUserWithFinancialGoalsById(int userId)
+        {
+            var financialGoalsById = await _dbContext.FinancialGoals
+                .Where(goal => goal.UserId == userId)
+                .ToListAsync();
+
+            return Ok(financialGoalsById);
+        }
+
+        // POST: api/Users/5/AddFinancialGoal
+        [Authorize]
+        [HttpPost("{userId:int}/AddFinancialGoal")]
+        public async Task<ActionResult<FinancialGoal>> AddFinancialGoalForUser(int userId, FinancialGoal financialGoal)
+        {
+            financialGoal.UserId = userId; // Set the UserId explicitly
+
+            _dbContext.FinancialGoals.Add(financialGoal);
+            await _dbContext.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetUserWithFinancialGoalsById), new { userId = financialGoal.UserId }, financialGoal);
+        }
+
+        // PUT: api/Users/5/UpdateFinancialGoal/1
+        [Authorize]
+        [HttpPut("{userId:int}/UpdateFinancialGoal/{goalId:int}")]
+        public async Task<IActionResult> UpdateFinancialGoalForUser(int userId, int goalId, FinancialGoal financialGoal)
+        {
+            if (userId != financialGoal.UserId || goalId != financialGoal.GoalId)
+            {
+                return BadRequest("Invalid userId or goalId in the request.");
+            }
+
+            _dbContext.Entry(financialGoal).State = EntityState.Modified;
+
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FinancialGoalExists(goalId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Users/5/DeleteFinancialGoal/1
+        [Authorize]
+        [HttpDelete("{userId:int}/DeleteFinancialGoal/{goalId:int}")]
+        public async Task<ActionResult<FinancialGoal>> DeleteFinancialGoalForUser(int userId, int goalId)
+        {
+            var financialGoal = await _dbContext.FinancialGoals.FindAsync(goalId);
+
+            if (financialGoal == null || financialGoal.UserId != userId)
+            {
+                return NotFound();
+            }
+
+            _dbContext.FinancialGoals.Remove(financialGoal);
+            await _dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         // helper methods
         private bool UsersExists(int id)
         {
@@ -197,6 +272,12 @@ namespace webapi.Controllers
         {
             return (_dbContext.Expenses?.Any(e => e.ExpenseId == id)).GetValueOrDefault();
         }
+
+        private bool FinancialGoalExists(int id)
+        {
+            return _dbContext.FinancialGoals.Any(e => e.GoalId == id);
+        }
+
 
     }
 
