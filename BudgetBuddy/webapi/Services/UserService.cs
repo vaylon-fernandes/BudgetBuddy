@@ -1,4 +1,4 @@
-namespace WebApi.Services;
+/*namespace WebApi.Services;
 
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -64,4 +64,4 @@ public class UserService : IUserService
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
-}
+}*/
