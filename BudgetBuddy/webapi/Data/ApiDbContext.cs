@@ -10,6 +10,7 @@ namespace webapi.Data
     {
         public DbSet<Users> User { get; set; }
         public DbSet<Expenses> Expenses { get; set; }
+        public DbSet<webapi.Entities.Budget> Budget { get; set; } = default!;
 
         public ApiDbContext() { }
         public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) {
@@ -47,11 +48,19 @@ namespace webapi.Data
             .HasConversion<string>()
             .HasMaxLength(50);
 
+            modelBuilder.Entity<Users>()
+                .HasOne(e=>e.budget)
+                .WithOne()
+                .HasForeignKey<Budget>(e=>e.BudgetId)
+                .IsRequired();
+
             modelBuilder.Entity<Expenses>()
         .HasOne(e => e.User)
         .WithMany(u => u.Expenses)
         .HasForeignKey(e => e.UserId)
         .IsRequired();
+
+        
         }
     }
     }

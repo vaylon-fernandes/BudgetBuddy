@@ -138,7 +138,55 @@ namespace webapi.Controllers
             return Ok(expensesById);
         }
 
-        
+        // user budget methods 
+        [Authorize]
+        [HttpGet("{userId:int}/Budget")]
+        public async Task<ActionResult<BudgetDTO>> GetUserBudget(int userId)
+        {
+            var user = await _dbContext.User
+                .Include(u => u.Budget) // Include the Budget navigation property
+                .FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var budgetDto = _mapper.Map<BudgetDTO>(user.Budget);
+
+            return Ok(budgetDto);
+        }
+
+        [Authorize]
+        [HttpPost("{userId:int}/Budget")]
+        public async Task<IActionResult> CreateOrUpdateUserBudget(int userId, BudgetDTO budgetDto)
+        {
+            var user = await _dbContext.User.FindAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var budget = _mapper.Map<Budget>(budgetDto);
+            budget.UserId = userId;
+
+            if (user.Budget == null)
+            {
+                // Create a new Budget record
+                user.Budget = budget;
+            }
+            else
+            {
+                // Update the existing Budget record
+                _mapper.Map(budget, user.Budget);
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
         // helper methods
         private bool UsersExists(int id)
         {
