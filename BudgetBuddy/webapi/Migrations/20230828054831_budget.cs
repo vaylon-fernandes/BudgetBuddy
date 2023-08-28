@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace webapi.Migrations
 {
     /// <inheritdoc />
-    public partial class expenseupdate : Migration
+    public partial class budget : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,27 @@ namespace webapi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_users", x => x.user_id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "budget",
+                columns: table => new
+                {
+                    budget_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    limit_amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_budget", x => x.budget_id);
+                    table.ForeignKey(
+                        name: "FK_budget_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "user_id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -58,6 +79,12 @@ namespace webapi.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_budget_user_id",
+                table: "budget",
+                column: "user_id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_expenses_user_id",
                 table: "expenses",
                 column: "user_id");
@@ -72,6 +99,9 @@ namespace webapi.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "budget");
+
             migrationBuilder.DropTable(
                 name: "expenses");
 

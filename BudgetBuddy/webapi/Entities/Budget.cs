@@ -12,8 +12,8 @@ namespace webapi.Entities
         public int BudgetId { get; set; }
         [Column("limit_amount")]
         public decimal LimitAmount { get; set; }
+        [ForeignKey(nameof(Budget))]
         [Column("user_id")]
-        [ForeignKey("user_id")]
         public int UserId { get; set; }
     }
 }
