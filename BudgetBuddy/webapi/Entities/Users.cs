@@ -26,5 +26,7 @@ namespace webapi.Entities
         public Role UserRole{ get; set; }
         [Column("salt", TypeName = "varchar(50)")]
         public string Salt { get; set; } = string.Empty;
+        public List<Expenses> Expenses { get; set; }
+
     }
 }

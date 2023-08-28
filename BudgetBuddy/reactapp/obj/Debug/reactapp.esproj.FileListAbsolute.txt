@@ -1,3 +1,0 @@
-C:\Users\Vaylon Fernandes\OneDrive\Documents\Github\BudgetBuddy\BudgetBuddy\reactapp\obj\Debug\reactapp.esproj.CoreCompileInputs.cache
-D:\VaibhavProject\BudgetBuddy\reactapp\obj\Debug\reactapp.esproj.SuggestedBindingRedirects.cache
-D:\VaibhavProject\BudgetBuddy\reactapp\obj\Debug\reactapp.esproj.CoreCompileInputs.cache
