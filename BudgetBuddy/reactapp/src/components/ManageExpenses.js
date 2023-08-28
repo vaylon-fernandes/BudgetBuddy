@@ -6,7 +6,7 @@ import ExpenseTotal from './ExpenseTotal';
 import ExpenseList from './ExpenseList';
 import AddExpenseForm from './AddExpenseForm';
 import RemainingBudget from './Remaining';
-
+import ShowAllExpenses from './ShowAllExpenses';
 
 
 export default function ManageExpenses()
@@ -29,7 +29,7 @@ export default function ManageExpenses()
 				<h3 className='mt-3'>Expenses</h3>
 				<div className='row '>
 					<div className='col-sm'>
-						<ExpenseList />
+						<ShowAllExpenses />
 					</div>
 				</div>
 				<h3 className='mt-3'>Add Expense</h3>

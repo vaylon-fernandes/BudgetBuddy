@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace webapi.Migrations
 {
     /// <inheritdoc />
-    public partial class expenseupdate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

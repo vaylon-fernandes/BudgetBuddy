@@ -56,6 +56,7 @@ namespace webapi.Controllers
                         responseLogin.Email = requestLogin.Email;
                         responseLogin.Token = new JwtSecurityTokenHandler().WriteToken(token);
                         responseLogin.ExpireDate = timeStamp;
+                        responseLogin.UserId=existingUser.UserId;
 
                     }
                     else
