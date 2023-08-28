@@ -28,5 +28,7 @@ namespace webapi.Entities
         public string Salt { get; set; } = string.Empty;
         public List<Expenses>? Expenses { get; set; }
         public Budget? Budget { get; set; }
+        public List<FinancialGoal>? FinancialGoals { get; set; }
+
     }
 }
