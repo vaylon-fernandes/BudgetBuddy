@@ -20,6 +20,10 @@ namespace webapi.Entities
             [Required]
             public decimal Amount { get; set; }
 
+            [Column("currently_saved", TypeName = "decimal(18, 2)")]
+            [Required]
+            public decimal CurrentlySaved { get; set; }
+
             [Column("user_id")]
             [Required]  
             public int UserId { get; set; }
