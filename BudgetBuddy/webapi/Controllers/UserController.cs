@@ -13,6 +13,7 @@ using webapi.Utils;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using webapi.DTO;
+using Humanizer;
 
 namespace webapi.Controllers
 {
@@ -42,6 +43,92 @@ namespace webapi.Controllers
             return Ok(requieredInfo);   
         }
 
+<<<<<<< HEAD
+        /*[HttpGet]
+        public ActionResult<IEnumerable<Users>> GetAllUsers()
+        {
+            return _dbContext.User;
+        }*/
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("login")]
+        public ActionResult<LoginResponse> Login(AuthenticateRequest requestLogin)
+        {
+            var responseLogin = new LoginResponse();
+            using (var db = _dbContext)
+            {
+                var existingUser = db.User.SingleOrDefault(x => x.Email == requestLogin.Email);
+                if (existingUser != null)
+                {
+                    var isPasswordVerified = CryptoUtil.VerifyPassword(requestLogin.Password, existingUser.Salt, existingUser.Password);
+                    if (isPasswordVerified)
+                    {
+                        var claimList = new List<Claim>();
+                        claimList.Add(new Claim(ClaimTypes.Name, existingUser.Email));
+                        claimList.Add(new Claim(ClaimTypes.Role, existingUser.UserRole.ToString()));
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
+                        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var expireDate = DateTime.UtcNow.AddDays(1);
+                        var timeStamp = DateUtil.ConvertToTimeStamp(expireDate);
+                        var token = new JwtSecurityToken(
+                            claims: claimList,
+                            notBefore: DateTime.UtcNow,
+                            expires: expireDate,
+                            signingCredentials: creds);
+                        responseLogin.Success = true;
+                        responseLogin.Email = requestLogin.Email;
+                        responseLogin.Token = new JwtSecurityTokenHandler().WriteToken(token);
+                        responseLogin.ExpireDate = timeStamp;
+
+                    }
+                    else
+                    {
+                        responseLogin.Success = false;
+                        responseLogin.MessageList.Add("Password is wrong");
+                    }
+                }
+                else
+                {
+                    responseLogin.Success = false;
+                    responseLogin.MessageList.Add("Email is wrong");
+                }
+            }
+            return responseLogin;
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("register")]
+        public ActionResult<AuthenticateResponse> Register(AuthenticateRequest requestRegister)
+        {
+            var responseRegister = new AuthenticateResponse();
+            using (var db = new ApiDbContext())
+            {
+                if (!db.User.Any(x => x.Email == requestRegister.Email))
+                {
+                    var email = requestRegister.Email;
+                    var salt = CryptoUtil.GenerateSalt();
+                    var password = requestRegister.Password;
+                    var hashedPassword = CryptoUtil.HashMultiple(password, salt);
+                    var user = new Users();
+                    user.Email = email;
+                    user.Salt = salt;
+                    user.Password = hashedPassword;
+                    user.UserRole = Role.USER;
+                    db.User.Add(user);
+                    db.SaveChanges();
+                    responseRegister.Success = true;
+                    Console.WriteLine($"{email} {password}");
+                }
+                else
+                {
+                    responseRegister.MessageList.Add("Email is already in use");
+                }
+            }
+            return responseRegister;
+        }
+=======
+>>>>>>> Development
 
         [Authorize]
         [HttpGet("{userId:int}")]
@@ -86,7 +173,7 @@ namespace webapi.Controllers
             return NoContent();
         }
 
-        // TODO: Include all entities -- Cascade
+        
         [Authorize]
         [HttpDelete("{userId:int}")]
         public async Task<ActionResult<Users>> DeleteUser(int userId)
@@ -138,7 +225,202 @@ namespace webapi.Controllers
             return Ok(expensesById);
         }
 
-        
+        // user budget methods 
+        [Authorize]
+        [HttpGet("{userId:int}/Budget")]
+        public async Task<ActionResult<BudgetDTO>> GetUserBudget(int userId)
+        {
+            var user = await _dbContext.User
+                .Include(u => u.Budget) // Include the Budget navigation property
+                .FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var budgetDto = _mapper.Map<BudgetDTO>(user.Budget);
+
+            return Ok(budgetDto);
+        }
+
+        [Authorize]
+        [HttpPost("{userId:int}/Budget")]
+        public async Task<IActionResult> CreateOrUpdateUserBudget(int userId, BudgetDTO budgetDto)
+        {
+            var user = await _dbContext.User.FindAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var budget = _mapper.Map<Budget>(budgetDto);
+            budget.UserId = userId;
+
+            if (user.Budget == null)
+            {
+                // Create a new Budget record
+                user.Budget = budget;
+            }
+            else
+            {
+                // Update the existing Budget record
+                _mapper.Map(budget, user.Budget);
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // GET: api/Users/5/FinancialGoals
+        [Authorize]
+        [HttpGet("{userId:int}/GetFinancialGoals")]
+        public async Task<ActionResult<IEnumerable<FinancialGoal>>> GetUserWithFinancialGoalsById(int userId)
+        {
+            var financialGoalsById = await _dbContext.FinancialGoals
+                .Where(goal => goal.UserId == userId)
+                .ToListAsync();
+
+            return Ok(financialGoalsById);
+        }
+
+        // POST: api/Users/5/AddFinancialGoal
+        [Authorize]
+        [HttpPost("{userId:int}/AddFinancialGoal")]
+        public async Task<ActionResult<FinancialGoal>> AddFinancialGoalForUser(int userId, FinancialGoal financialGoal)
+        {
+            financialGoal.UserId = userId; // Set the UserId explicitly
+
+            _dbContext.FinancialGoals.Add(financialGoal);
+            await _dbContext.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetUserWithFinancialGoalsById), new { userId = financialGoal.UserId }, financialGoal);
+        }
+
+        // PUT: api/Users/5/UpdateFinancialGoal/1
+        [Authorize]
+        [HttpPut("{userId:int}/UpdateFinancialGoal/{goalId:int}")]
+        public async Task<IActionResult> UpdateFinancialGoalForUser(int userId, int goalId, FinancialGoal financialGoal)
+        {
+            if (userId != financialGoal.UserId || goalId != financialGoal.GoalId)
+            {
+                return BadRequest("Invalid userId or goalId in the request.");
+            }
+
+            _dbContext.Entry(financialGoal).State = EntityState.Modified;
+
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FinancialGoalExists(goalId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Users/5/DeleteFinancialGoal/1
+        [Authorize]
+        [HttpDelete("{userId:int}/DeleteFinancialGoal/{goalId:int}")]
+        public async Task<ActionResult<FinancialGoal>> DeleteFinancialGoalForUser(int userId, int goalId)
+        {
+            var financialGoal = await _dbContext.FinancialGoals.FindAsync(goalId);
+
+            if (financialGoal == null || financialGoal.UserId != userId)
+            {
+                return NotFound();
+            }
+
+            _dbContext.FinancialGoals.Remove(financialGoal);
+            await _dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // Savings methods
+
+        // GET: api/Users/5/Savings
+        [Authorize]
+        [HttpGet("{userId:int}/GetSavings")]
+        public async Task<ActionResult<SavingsDTO>> GetUserSavings(int userId)
+        {
+            var savings = await _dbContext.Savings
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (savings == null)
+            {
+                return NotFound("Savings not found for the user.");
+            }
+
+            var savingsDTO = _mapper.Map<SavingsDTO>(savings);
+            return Ok(savingsDTO);
+        }
+
+        // POST: api/Users/5/AddSavings
+        [Authorize]
+        [HttpPost("{userId:int}/AddSavings")]
+        public async Task<ActionResult<SavingsDTO>> AddSavingsForUser(int userId, SavingsDTO savingsDTO)
+        {
+            var savings = _mapper.Map<Savings>(savingsDTO);
+            savings.UserId = userId; // Set the UserId explicitly
+
+            _dbContext.Savings.Add(savings);
+            await _dbContext.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetUserSavings), new { userId }, savingsDTO);
+        }
+
+        // PUT: api/Users/5/UpdateSavings
+        [Authorize]
+        [HttpPut("{userId:int}/UpdateSavings")]
+        public async Task<IActionResult> UpdateSavingsForUser(int userId, SavingsDTO savingsDTO)
+        {
+            var existingSavings = await _dbContext.Savings
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (existingSavings == null)
+            {
+                return NotFound("Savings not found for the user.");
+            }
+
+            var updatedSavings = _mapper.Map(savingsDTO, existingSavings);
+
+            _dbContext.Entry(updatedSavings).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // DELETE: api/Users/5/DeleteSavings
+        [Authorize]
+        [HttpDelete("{userId:int}/DeleteSavings")]
+        public async Task<ActionResult<SavingsDTO>> DeleteSavingsForUser(int userId)
+        {
+            var savings = await _dbContext.Savings
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (savings == null)
+            {
+                return NotFound("Savings not found for the user.");
+            }
+
+            _dbContext.Savings.Remove(savings);
+            await _dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         // helper methods
         private bool UsersExists(int id)
         {
@@ -149,6 +431,12 @@ namespace webapi.Controllers
         {
             return (_dbContext.Expenses?.Any(e => e.ExpenseId == id)).GetValueOrDefault();
         }
+
+        private bool FinancialGoalExists(int id)
+        {
+            return _dbContext.FinancialGoals.Any(e => e.GoalId == id);
+        }
+
 
     }
 

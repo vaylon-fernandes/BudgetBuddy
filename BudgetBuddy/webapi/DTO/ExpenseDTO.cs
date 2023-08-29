@@ -8,7 +8,10 @@ namespace webapi.DTO
         public string Description { get; set; } = string.Empty;
         public ExpenseCategory ExpenseCategory { get; set; }
         public decimal Amount { get; set; }
-        public DateTime EnteredDate { get; set; } = DateTime.Now;
+        public DateTime EnteredDate { get; set; } 
         public int UserId { get; set; }
+        public ExpenseDTO() { 
+            EnteredDate = DateTime.Now;
+        }
     }
 }
