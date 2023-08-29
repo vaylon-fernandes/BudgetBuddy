@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { AppContext } from '../services/AppContext';
 import { useAuth } from "../services/AuthContext";
 import { v4 as uuidv4 } from 'uuid';
@@ -11,7 +12,7 @@ const AddExpenseForm = (props) => {
 	const [selectedExpense, setSelectedExpense] = useState('');
 	const [amount, setAmount] = useState('');
 	const [expenseDescription, setExpenseDescription] = useState(''); // New state for expenseDescription
-
+	const navigate = useNavigate();
 	const expenses = [
 		{ id: '1', expenseCategory: 'HOUSING' },
 		{ id: '2', expenseCategory: 'FOOD' },
@@ -49,10 +50,15 @@ const AddExpenseForm = (props) => {
 			const response = await axios.post('http://localhost:5096/api/Expenses', expenseData);
 			console.log('Expense saved successfully:', response.data);
 
-			// Clear form fields after successful submission
+			// const expenseResponse = response.data;
+			// if(expenseResponse.success===true){
+			// 	// Clear form fields after successful submission
 			// setSelectedExpense('');
 			// setAmount('');
 			// setExpenseDescription('');
+			navigate("/ManageExpenses");
+			// }
+			
 		} catch (error) {
 			console.error('Error saving expense:', error);
 		}

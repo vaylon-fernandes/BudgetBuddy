@@ -14,7 +14,7 @@ export default function ManageExpenses()
     return(
         <AppProvider>
 			<div className='container'>
-				<h1 className='mt-3'>My Budget Planner</h1>
+				{/* <h1 className='mt-3'>My Budget Planner</h1>
 				<div className='row mt-3'>
 					<div className='col-sm'>
 						<Budget />
@@ -25,7 +25,7 @@ export default function ManageExpenses()
 					<div className='col-sm'>
 						<ExpenseTotal />
 					</div>
-				</div>
+				</div> */}
 				<h3 className='mt-3'>Expenses</h3>
 				<div className='row '>
 					<div className='col-sm'>
