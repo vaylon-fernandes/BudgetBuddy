@@ -43,7 +43,6 @@ namespace webapi.Controllers
             return Ok(requieredInfo);   
         }
 
-<<<<<<< HEAD
         /*[HttpGet]
         public ActionResult<IEnumerable<Users>> GetAllUsers()
         {
@@ -127,8 +126,6 @@ namespace webapi.Controllers
             }
             return responseRegister;
         }
-=======
->>>>>>> Development
 
         [Authorize]
         [HttpGet("{userId:int}")]

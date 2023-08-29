@@ -68,7 +68,7 @@ const AddExpenseForm = (props) => {
 		<form onSubmit={onSubmit}>
 			<div className='row'>
 				<div className='col-sm col-lg-4'>
-					<label htmlFor='expenseCategory'>expenseCategory</label>
+					<label htmlFor='expenseCategory'>Category</label>
 					<select
 						required
 						className='form-control'
@@ -85,7 +85,7 @@ const AddExpenseForm = (props) => {
 					</select>
 				</div>
 				<div className='col-sm col-lg-4'>
-					<label htmlFor='amount'>amount</label>
+					<label htmlFor='amount'>Amount</label>
 					<input
 						required
 						type='number'

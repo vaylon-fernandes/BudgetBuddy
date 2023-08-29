@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace webapi.Migrations
 {
     /// <inheritdoc />
-    public partial class budget : Migration
+    public partial class budgetbuddy : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,6 +78,50 @@ namespace webapi.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "financial_goals",
+                columns: table => new
+                {
+                    goal_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    goal_name = table.Column<string>(type: "varchar(250)", nullable: false),
+                    amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    currently_saved = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: false),
+                    UsersUserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_financial_goals", x => x.goal_id);
+                    table.ForeignKey(
+                        name: "FK_financial_goals_users_UsersUserId",
+                        column: x => x.UsersUserId,
+                        principalTable: "users",
+                        principalColumn: "user_id");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "savings",
+                columns: table => new
+                {
+                    savings_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_savings", x => x.savings_id);
+                    table.ForeignKey(
+                        name: "FK_savings_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "user_id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_budget_user_id",
                 table: "budget",
@@ -88,6 +132,17 @@ namespace webapi.Migrations
                 name: "IX_expenses_user_id",
                 table: "expenses",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_financial_goals_UsersUserId",
+                table: "financial_goals",
+                column: "UsersUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_savings_user_id",
+                table: "savings",
+                column: "user_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_users_email",
@@ -104,6 +159,12 @@ namespace webapi.Migrations
 
             migrationBuilder.DropTable(
                 name: "expenses");
+
+            migrationBuilder.DropTable(
+                name: "financial_goals");
+
+            migrationBuilder.DropTable(
+                name: "savings");
 
             migrationBuilder.DropTable(
                 name: "users");

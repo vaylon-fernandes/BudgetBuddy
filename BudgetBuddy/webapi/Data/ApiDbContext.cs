@@ -26,7 +26,7 @@ namespace webapi.Data
                     if (!databaseCreator.CanConnect()) databaseCreator.Create();
 
                     // Create Tables if no tables exist
-                    if (!databaseCreator.HasTables()) databaseCreator.CreateTables();
+                    //if (!databaseCreator.HasTables()) databaseCreator.CreateTables();
                     Console.WriteLine("tables created");
                 }
             }
