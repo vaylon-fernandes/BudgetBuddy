@@ -9,33 +9,37 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
+  const [userId, setUserId] = useState('');
+  const [authToken, setAuthToken] = useState('');
 
   const login = async (userData) => {
     try {
       const response = await axios.post(
-        "http://localhost:5096/api/User/login",
+        "http://localhost:5096/api/Auth/login",
         userData
       );
 
       const loginResponse = response.data;
-      console.log(loginResponse);
+      console.log("resp:  "+loginResponse.userId);
       //console.log(typeof loginResponse)
       //console.log(userData.email)
 
       if (loginResponse.success===true) {
-        setUser(userData.email);
+        setUserEmail(loginResponse.email);
+        setUserId(loginResponse.userId);
+        setAuthToken(loginResponse.token)
         // console.log("right")
       } else {
         console.log("wrong")
-        setUser(null);  
+        setUserEmail(null);  
       }
       return loginResponse;
       // console.log(user)
        // This might need to be adjusted based on your needs.
     } catch (error) {
       console.error("Login error:", error);
-      setUser(null);
+      setUserEmail(null);
       throw error;
     }
   };
@@ -44,15 +48,19 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     // TODO - logout logic here.
     console.log("logout");
-    setUser(null);
+    setUserEmail(null);
+  };
+
+  const getToken = () => {
+    return authToken; // Return the stored token
   };
 
   useEffect(() => {
-    console.log("User updated:", user);
-  }, [user]);
+    console.log("User updated:", setUserEmail);
+  }, [setUserEmail]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ userEmail, userId, login, logout, getToken }}>
       {children}
     </AuthContext.Provider>
   );

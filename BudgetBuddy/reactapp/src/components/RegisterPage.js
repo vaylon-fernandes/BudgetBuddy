@@ -14,7 +14,7 @@ const SignUpForm = () => {
     // TODO: Handle signup logic here
     try{
       const response = await axios.post(
-        "http://localhost:5096/api/User/register",
+        "http://localhost:5096/api/Auth/register",
         {
           email:email,
           password:password

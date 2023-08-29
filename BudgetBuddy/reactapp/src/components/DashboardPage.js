@@ -1,19 +1,26 @@
 import React, { useState } from "react";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useAuth } from "../services/AuthContext";
 import ViewReport from "./ViewReport";
 import ManageExpenses from "./ManageExpenses";
 
 const DashboardPage = (props) => {
-  const { user } = useAuth();
+  const { userEmail,logout } = useAuth();
   const [activeTab, setActiveTab] = useState("home");
+  const navigate = useNavigate();
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
 
+  const handleLogout = () => {
+    logout();
+    // Perform any additional cleanup, like redirecting to the login page.
+    navigate("/login");
+  };
+
   
-    return user ? (
+    return userEmail ? (
         <>
       <Link to="/" className="px-4 text-decoration-none">
         {"<<  Back to home"}
@@ -22,7 +29,8 @@ const DashboardPage = (props) => {
         <div className="row flex-lg-row align-items-center g-5 py-5">
           <div className="col-lg-6">
             <h1 className="display-5 fw-bold lh-1 mb-3">Dashboard Page</h1>
-            <p>Welcome, {user}!</p>
+            <p>Welcome, {userEmail}!</p>
+            <button onClick={handleLogout}>Logout</button>
             <div className="row">
               <div className="col-3">
                 <div

@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import DashboardPage from "./components/DashboardPage";
+import ManageExpenses from "./components/ManageExpenses";
 import { AuthProvider } from "./services/AuthContext";
 
 const root = createRoot(document.getElementById("root"));
@@ -22,6 +23,7 @@ root.render(
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/ManageExpenses" element={<ManageExpenses />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
