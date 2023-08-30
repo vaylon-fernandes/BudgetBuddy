@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/Hero_1.png";
+import logo from "../assets/_66dd8dcc-1cc8-495c-971c-cf19088b198f.jpeg";
 import { Link } from "react-router-dom";
 
 const LandingPage = (props) => {
